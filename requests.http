@@ -1,0 +1,13 @@
+### GET request to example server
+
+GET http://localhost:8080/api/v1/transactions
+###
+
+POST http://localhost:8080/api/v1/transactions
+Content-Type: application/json
+
+{
+  "retailer": "First Retailer",
+  "amount": 120,
+  "date": "2025-07-04T12:00:00.000Z"
+}
