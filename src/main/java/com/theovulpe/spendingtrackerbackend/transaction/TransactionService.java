@@ -1,4 +1,4 @@
-package com.theovulpe.spendingtrackerbackend;
+package com.theovulpe.spendingtrackerbackend.transaction;
 
 import org.springframework.stereotype.Service;
 

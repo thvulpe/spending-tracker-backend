@@ -1,4 +1,4 @@
-package com.theovulpe.spendingtrackerbackend;
+package com.theovulpe.spendingtrackerbackend.transaction;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,8 +17,7 @@ public class Transaction {
     private Integer amount;
     private Date date;
 
-    public Transaction(Integer id, String retailer, Integer amount, Date date) {
-        this.id = id;
+    public Transaction(String retailer, Integer amount, Date date) {
         this.retailer = retailer;
         this.amount = amount;
         this.date = date;
