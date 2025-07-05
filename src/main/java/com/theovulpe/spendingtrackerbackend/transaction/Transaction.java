@@ -1,9 +1,7 @@
 package com.theovulpe.spendingtrackerbackend.transaction;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.theovulpe.spendingtrackerbackend.user.User;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -17,6 +15,10 @@ public class Transaction {
     private Integer amount;
     private Date date;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     public Transaction(String retailer, Integer amount, Date date) {
         this.retailer = retailer;
         this.amount = amount;
@@ -25,6 +27,10 @@ public class Transaction {
 
     public Transaction() {
 
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getId() {

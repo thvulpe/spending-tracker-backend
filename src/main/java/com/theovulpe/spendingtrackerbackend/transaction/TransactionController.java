@@ -1,5 +1,7 @@
 package com.theovulpe.spendingtrackerbackend.transaction;
 
+import com.theovulpe.spendingtrackerbackend.auth.AuthenticationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -8,22 +10,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/transactions")
 public class TransactionController {
-    private final TransactionService transactionService;
-    private final TransactionRepository transactionRepository;
 
-    public TransactionController(TransactionService transactionService, TransactionRepository transactionRepository) {
+    private final TransactionService transactionService;
+
+    public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
-        this.transactionRepository = transactionRepository;
     }
 
     @GetMapping
-    public List<Transaction> getTransactions() {
-        return transactionService.getTransactions();
+    public List<Transaction> getUserTransactions() {
+        return transactionService.getTransactionsForCurrentUser();
     }
 
     @PostMapping
-    public void insertTransaction(@RequestBody Transaction transaction) {
-        transactionService.insertTransaction(transaction);
+    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction t) {
+        Transaction saved = transactionService.addTransactionForCurrentUser(t);
+        return ResponseEntity.ok(saved);
     }
 
     @DeleteMapping("/{id}")

@@ -1,13 +1,27 @@
-### GET request to example server
-
-GET http://localhost:8080/api/v1/transactions
-###
-
-POST http://localhost:8080/api/v1/transactions
+### REGISTER
+POST http://localhost:8080/api/auth/register
 Content-Type: application/json
 
 {
-  "retailer": "First Retailer",
-  "amount": 120,
-  "date": "2025-07-04T12:00:00.000Z"
+  "firstName": "Daria",
+  "lastName": "Theo",
+  "email": "daria@example.com",
+  "password": "parola123"
 }
+
+###
+
+### LOGIN
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "daria@example.com",
+  "password": "parola123"
+}
+
+###
+
+### GET CURRENT USER (replace <TOKEN> manually)
+GET http://localhost:8080/api/user/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXJpYUBleGFtcGxlLmNvbSIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJpYXQiOjE3NTE2NzU1MzUsImV4cCI6MTc1MTY3Njk3NX0.He1ByOWySqdLkCvsDMH7nE3WNp1v4nhE12ByyEygTV8
