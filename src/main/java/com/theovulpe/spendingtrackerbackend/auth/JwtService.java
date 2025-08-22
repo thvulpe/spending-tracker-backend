@@ -4,17 +4,21 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
+import javax.crypto.SecretKey;
 import java.security.Key;
+import java.util.Base64;
+import java.util.Date;
 import java.util.function.Function;
 
 @Service
 public class JwtService {
 
+    // asigură-te că ai această cheie setată în application.properties / env
+    // application.security.jwt.secret-key=... (Base64)
     @Value("${application.security.jwt.secret-key}")
     private String secretKey;
 
@@ -24,11 +28,12 @@ public class JwtService {
 
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
+                .subject(userDetails.getUsername())
                 .claim("authorities", userDetails.getAuthorities())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)) // 24 minute
-                .signWith(getSignKey(), SignatureAlgorithm.HS256)
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + 1000L * 60 * 24)) // 24 minute
+                // în 0.12.x fie lași inferența după cheie, fie precizezi algoritmul nou:
+                .signWith(getSignKey()) // <- API nou
                 .compact();
     }
 
@@ -50,16 +55,17 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignKey())
+        // API nou (0.12.x): parser() + verifyWith(key) + parseSignedClaims()
+        return Jwts.parser()
+                .verifyWith((SecretKey) getSignKey())
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     private Key getSignKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        // evită io.jsonwebtoken.io.Decoders; folosește Java Base64
+        byte[] keyBytes = Base64.getDecoder().decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
