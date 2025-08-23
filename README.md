@@ -1,6 +1,6 @@
 # 💸 Spending Tracker
 
-A **full-stack** expense manager where users can add, delete, and filter transactions and visualize their spending across the year.
+A **full-stack** expense manager where users can add, delete, filter transactions and visualize their spending across the year.
 
 🔗 [Live Demo](https://spending-tracker-green.vercel.app/)
 
