@@ -9,13 +9,13 @@ A **full-stack** expense manager where users can add, delete, filter transaction
 ## 📸 Screenshots
 
 ### 💼 Transaction List
-![Transaction list](public/screenshots/transactions.png)
+![Transaction list](screenshots/transactions.png)
 
 ### 📊 Spending Chart
-![Spending chart](public/screenshots/chart.png)
+![Spending chart](screenshots/chart.png)
 
 ### ➕ Add Transaction
-![Spending chart](public/screenshots/transaction-adder.png)
+![Spending chart](screenshots/transaction-adder.png)
 
 ---
 
@@ -36,7 +36,7 @@ A **full-stack** expense manager where users can add, delete, filter transaction
 - 🗑️ Delete existing transactions
 - 📅 Filter transactions by **year** and **month**
 - 📊 Visualize **spending chart** for the current year
-- 🔒 Authentication
+- 🔒 Authentication using Spring Security
 
 ---
 
